@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Debian 7 (wheezy) Base System (shellscript)
+#    CentOS 6 (centos6) Cron Job Scheduler (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -28,26 +28,22 @@ alias RUN='';
 shopt -s expand_aliases;
 
 # Load dockerfile
-source "$(dirname $(readlink -f $0))/../dockerfiles/base.dockerfile";
+source "$(dirname $(readlink -f $0))/../dockerfiles/cron.dockerfile";
 
 #
 # Cleanup
 #
 
 # Remove dupplicated services
-apt-get remove --purge -y dropbear supervisor;
+yum remove -y cronie cronie-anacron;
 
 #
 # Configuration
 #
 
 # Enable daemon
-update-rc.d rsyslog enable;
-update-rc.d cron enable;
-update-rc.d sshd enable;
+chkconfig crond on;
 
 # Start daemon
-service rsyslog restart;
-service cron restart;
-service sshd restart;
+service crond restart;
 
