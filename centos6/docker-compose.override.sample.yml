@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  cron:
+  centos6_cron_job:
     build:
       args:
 

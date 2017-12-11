@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  cron:
+  debian8_cron_job:
     build:
       args:
 
