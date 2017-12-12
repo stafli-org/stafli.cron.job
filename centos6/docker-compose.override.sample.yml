@@ -1,6 +1,6 @@
 ---
 #
-#    CentOS 6 (centos6) Cron Job Scheduler (docker-compose.override.sample.yml)
+#    CentOS 6 (centos6) Cron14 Job Scheduler (docker-compose.override.sample.yml)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -27,7 +27,7 @@ version: '2'
 #
 services:
 
-  centos6_cron_job:
+  job_cron14_centos6:
     build:
       args:
 

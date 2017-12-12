@@ -136,23 +136,31 @@ purge:
         ifeq ($(DISTRO), all)
 		@echo Purging containers, networks, volumes and images for debian8...
 		bash -c "(cd debian8; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.cron.job:debian8_cron;
+		docker image rm stafli/stafli.job.cron:cron30_debian8;
 		@echo
 		@echo Purging containers, networks, volumes and images for debian7...
 		bash -c "(cd debian7; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.cron.job:debian7_cron;
+		docker image rm stafli/stafli.job.cron:cron30_debian7;
 		@echo
 		@echo Purging containers, networks, volumes and images for centos7...
 		bash -c "(cd centos7; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.cron.job:centos7_cron;
+		docker image rm stafli/stafli.job.cron:cron14_centos7;
 		@echo
 		@echo Purging containers, networks, volumes and images for centos6...
 		bash -c "(cd centos6; set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.cron.job:centos6_cron;
+		docker image rm stafli/stafli.job.cron:cron14_centos6;
         else
 		@echo Purging containers, networks, volumes and images for $(DISTRO)...
 		bash -c "(cd $(DISTRO); set -o allexport; source .env; set +o allexport; docker-compose down)";
-		docker image rm stafli/stafli.cron.job:$(DISTRO)_cron;
+                ifeq ($(DISTRO), debian8)
+			docker image rm stafli/stafli.job.cron:cron30_$(DISTRO);
+                else ifeq ($(DISTRO), debian7)
+			docker image rm stafli/stafli.job.cron:cron30_$(DISTRO);
+                else ifeq ($(DISTRO), centos7)
+			docker image rm stafli/stafli.job.cron:cron14_$(DISTRO);
+                else ifeq ($(DISTRO), centos6)
+			docker image rm stafli/stafli.job.cron:cron14_$(DISTRO);
+                endif
         endif
 
 
@@ -162,19 +170,19 @@ img-ls:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Listing images for debian8...
-		docker image ls | grep -E "stafli/stafli.cron.job.*debian8" | sort -n;
+		docker image ls | grep -E "stafli/stafli.job.cron.*debian8" | sort -n;
 		@echo
 		@echo Listing images for debian7...
-		docker image ls | grep -E "stafli/stafli.cron.job.*debian7" | sort -n;
+		docker image ls | grep -E "stafli/stafli.job.cron.*debian7" | sort -n;
 		@echo
 		@echo Listing images for centos7...
-		docker image ls | grep -E "stafli/stafli.cron.job.*centos7" | sort -n;
+		docker image ls | grep -E "stafli/stafli.job.cron.*centos7" | sort -n;
 		@echo
 		@echo Listing images for centos6...
-		docker image ls | grep -E "stafli/stafli.cron.job.*centos6" | sort -n;
+		docker image ls | grep -E "stafli/stafli.job.cron.*centos6" | sort -n;
         else
 		@echo Listing images for $(DISTRO)...
-		docker image ls | grep -E "stafli/stafli.cron.job.*$(DISTRO)" | sort -n;
+		docker image ls | grep -E "stafli/stafli.job.cron.*$(DISTRO)" | sort -n;
         endif
 
 
@@ -228,19 +236,27 @@ img-rm:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Removing images for debian8...
-		docker image rm stafli/stafli.cron.job:debian8_cron;
+		docker image rm stafli/stafli.job.cron:cron30_debian8;
 		@echo
 		@echo Removing images for debian7...
-		docker image rm stafli/stafli.cron.job:debian7_cron;
+		docker image rm stafli/stafli.job.cron:cron30_debian7;
 		@echo
 		@echo Removing images for centos7...
-		docker image rm stafli/stafli.cron.job:centos7_cron;
+		docker image rm stafli/stafli.job.cron:cron14_centos7;
 		@echo
 		@echo Removing images for centos6...
-		docker image rm stafli/stafli.cron.job:centos6_cron;
+		docker image rm stafli/stafli.job.cron:cron14_centos6;
         else
 		@echo Removing images for $(DISTRO)...
-		docker image rm stafli/stafli.cron.job:$(DISTRO)_cron;
+                ifeq ($(DISTRO), debian8)
+			docker image rm stafli/stafli.job.cron:cron30_$(DISTRO);
+                else ifeq ($(DISTRO), debian7)
+			docker image rm stafli/stafli.job.cron:cron30_$(DISTRO);
+                else ifeq ($(DISTRO), centos7)
+			docker image rm stafli/stafli.job.cron:cron14_$(DISTRO);
+                else ifeq ($(DISTRO), centos6)
+			docker image rm stafli/stafli.job.cron:cron14_$(DISTRO);
+                endif
         endif
 
 
@@ -426,19 +442,27 @@ con-inspect:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Inspecting containers for debian8...
-		docker container inspect stafli_debian8_cron_job_1;
+		docker container inspect stafli_job_cron30_debian8_1;
 		@echo
 		@echo Inspecting containers for debian7...
-		docker container inspect stafli_debian7_cron_job_1;
+		docker container inspect stafli_job_cron30_debian7_1;
 		@echo
 		@echo Inspecting containers for centos7...
-		docker container inspect stafli_centos7_cron_job_1;
+		docker container inspect stafli_job_cron14_centos7_1;
 		@echo
 		@echo Inspecting containers for centos6...
-		docker container inspect stafli_centos6_cron_job_1;
+		docker container inspect stafli_job_cron14_centos6_1;
         else
 		@echo Inspecting containers for $(DISTRO)...
-		docker container inspect stafli_$(DISTRO)_cron_job_1;
+                ifeq ($(DISTRO), debian8)
+			docker container inspect stafli_job_cron30_$(DISTRO)_1;
+                else ifeq ($(DISTRO), debian7)
+			docker container inspect stafli_job_cron30_$(DISTRO)_1;
+                else ifeq ($(DISTRO), centos7)
+			docker container inspect stafli_job_cron14_$(DISTRO)_1;
+                else ifeq ($(DISTRO), centos6)
+			docker container inspect stafli_job_cron14_$(DISTRO)_1;
+                endif
         endif
 
 con-ips:
@@ -447,19 +471,27 @@ con-ips:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Showing IP addresses of containers for debian8...
-		docker container inspect stafli_debian8_cron_job_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect stafli_job_cron30_debian8_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
 		@echo
 		@echo Showing IP addresses of containers for debian7...
-		docker container inspect stafli_debian7_cron_job_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect stafli_job_cron30_debian7_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
 		@echo
 		@echo Showing IP addresses of containers for centos7...
-		docker container inspect stafli_centos7_cron_job_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect stafli_job_cron14_centos7_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
 		@echo
 		@echo Showing IP addresses of containers for centos6...
-		docker container inspect stafli_centos6_cron_job_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+		docker container inspect stafli_job_cron14_centos6_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
         else
 		@echo Showing IP addresses of containers for $(DISTRO)...
-		docker container inspect stafli_$(DISTRO)_cron_job_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+                ifeq ($(DISTRO), debian8)
+			docker container inspect stafli_job_cron30_$(DISTRO)_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+                else ifeq ($(DISTRO), debian7)
+			docker container inspect stafli_job_cron30_$(DISTRO)_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+                else ifeq ($(DISTRO), centos7)
+			docker container inspect stafli_job_cron14_$(DISTRO)_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+                else ifeq ($(DISTRO), centos6)
+			docker container inspect stafli_job_cron14_$(DISTRO)_1 | grep -e "inspect" -e "\"NetworkID\"" -B 0 -A 8;
+                endif
         endif
 
 
@@ -469,19 +501,27 @@ con-ports:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Showing ports of containers for debian8...
-		docker container port stafli_debian8_cron_job_1;
+		docker container port stafli_job_cron30_debian8_1;
 		@echo
 		@echo Showing ports of containers for debian7...
-		docker container port stafli_debian7_cron_job_1;
+		docker container port stafli_job_cron30_debian7_1;
 		@echo
 		@echo Showing ports of containers for centos7...
-		docker container port stafli_centos7_cron_job_1;
+		docker container port stafli_job_cron14_centos7_1;
 		@echo
 		@echo Showing ports of containers for centos6...
-		docker container port stafli_centos6_cron_job_1;
+		docker container port stafli_job_cron14_centos6_1;
         else
 		@echo Showing ports of containers for $(DISTRO)...
-		docker container port stafli_$(DISTRO)_cron_job_1;
+                ifeq ($(DISTRO), debian8)
+			docker container port stafli_job_cron30_$(DISTRO)_1;
+                else ifeq ($(DISTRO), debian7)
+			docker container port stafli_job_cron30_$(DISTRO)_1;
+                else ifeq ($(DISTRO), centos7)
+			docker container port stafli_job_cron14_$(DISTRO)_1;
+                else ifeq ($(DISTRO), centos6)
+			docker container port stafli_job_cron14_$(DISTRO)_1;
+                endif
         endif
 
 
@@ -491,19 +531,27 @@ con-top:
 	@echo
         ifeq ($(DISTRO), all)
 		@echo Showing processes of containers for debian8...
-		docker container top stafli_debian8_cron_job_1;
+		docker container top stafli_job_cron30_debian8_1;
 		@echo
 		@echo Showing processes of containers for debian7...
-		docker container top stafli_debian7_cron_job_1;
+		docker container top stafli_job_cron30_debian7_1;
 		@echo
 		@echo Showing processes of containers for centos7...
-		docker container top stafli_centos7_cron_job_1;
+		docker container top stafli_job_cron14_centos7_1;
 		@echo
 		@echo Showing processes of containers for centos6...
-		docker container top stafli_centos6_cron_job_1;
+		docker container top stafli_job_cron14_centos6_1;
         else
 		@echo Showing processes of containers for $(DISTRO)...
-		docker container top stafli_$(DISTRO)_cron_job_1;
+                ifeq ($(DISTRO), debian8)
+			docker container top stafli_job_cron30_$(DISTRO)_1;
+                else ifeq ($(DISTRO), debian7)
+			docker container top stafli_job_cron30_$(DISTRO)_1;
+                else ifeq ($(DISTRO), centos7)
+			docker container top stafli_job_cron14_$(DISTRO)_1;
+                else ifeq ($(DISTRO), centos6)
+			docker container top stafli_job_cron14_$(DISTRO)_1;
+                endif
         endif
 
 

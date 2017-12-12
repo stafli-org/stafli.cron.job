@@ -1,6 +1,6 @@
 
 #
-#    Debian 7 (wheezy) Cron Job Scheduler (dockerfile)
+#    Debian 7 (wheezy) Cron30 Job Scheduler (dockerfile)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM stafli/stafli.base.system:debian7_base
+FROM stafli/stafli.system.base:base10_debian7
 
 #
 # Arguments

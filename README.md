@@ -1,6 +1,6 @@
 # Stafli Cron Job Scheduler
 Stafli Cron Job Scheduler builds based on [Debian](https://www.debian.org) and [CentOS](https://www.centos.org), and developed as scripts for [Docker](https://www.docker.com).  
-Continues on [Stafli Base System](https://github.com/stafli-org/stafli.base.system) builds.  
+Continues on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) builds.  
 This project is part of the [Stafli Application Stack](https://github.com/stafli-org).
 
 Requires [Docker Compose](https://docs.docker.com/compose) 1.6.x or higher due to the [version 2](https://docs.docker.com/compose/compose-file/#versioning) format of the docker-compose.yml files.
@@ -10,7 +10,7 @@ An optional [Makefile](../../tree/master/Makefile) is provided to help with load
 
 Scripts are also provided for each distribution to help test and deploy the installation procedures in non-Docker environments.
 
-The images are automatically built at a [repository](https://hub.docker.com/r/stafli/stafli.cron.job) in the Docker Hub registry.
+The images are automatically built at a [repository](https://hub.docker.com/r/stafli/stafli.job.cron) in the Docker Hub registry.
 
 ## Distributions
 The services use custom images as a starting point for the following distributions:
@@ -23,23 +23,24 @@ The services use custom images as a starting point for the following distributio
 
 ## Services
 These are the services described by the dockerfile and docker-compose files:
-- Cron, built on [Stafli Base System](https://github.com/stafli-org/stafli.base.system) and additional [ISC Cron](ftp://ftp.isc.org/isc/cron/cron_4.1.shar) (Debian) and [Cronie](https://github.com/cronie-crond/cronie) (CentOS) packages
+- Cron 1.4.x (centos6 and centos7), built on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) and additional [ISC Cron](ftp://ftp.isc.org/isc/cron/cron_4.1.shar) packages
+- Cron 3.0.x (debian7 and debian8), built on [Stafli Base System](https://github.com/stafli-org/stafli.system.base) and additional [Vixie Cron / Cronie](https://github.com/cronie-crond/cronie) packages
 
 ## Images
-These are the [resulting images](https://hub.docker.com/r/stafli/stafli.cron.job/tags) upon building:
-- Cron:
-  - stafli/stafli.cron.job:debian8_cron
-  - stafli/stafli.cron.job:debian7_cron
-  - stafli/stafli.cron.job:centos7_cron
-  - stafli/stafli.cron.job:centos6_cron
+These are the [resulting images](https://hub.docker.com/r/stafli/stafli.job.cron/tags) upon building:
+- Cron 1.4.x/3.0.x:
+  - stafli/stafli.job.cron:cron30_debian8
+  - stafli/stafli.job.cron:cron30_debian7
+  - stafli/stafli.job.cron:cron14_centos7
+  - stafli/stafli.job.cron:cron14_centos6
 
 ## Containers
 These containers can be created from the images:
-- Cron:
-  - debian8_cron_xxx
-  - debian7_cron_xxx
-  - centos7_cron_xxx
-  - centos6_cron_xxx
+- Cron 1.4.x/3.0.x:
+  - stafli_job_cron30_debian8_xxx
+  - stafli_job_cron30_debian7_xxx
+  - stafli_job_cron14_centos7_xxx
+  - stafli_job_cron14_centos6_xxx
 
 ## Usage
 
@@ -56,19 +57,19 @@ Where <image_url> is the full image url (lookup the image list above).
 
 Example:
 ```
-docker pull stafli/stafli.cron.job:debian8_cron
+docker pull stafli/stafli.job.cron:cron30_debian8
 
-docker run -ti stafli/stafli.cron.job:debian8_cron /bin/bash
+docker run -ti stafli/stafli.job.cron:cron30_debian8 /bin/bash
 ```
 
 ### From GitHub repository (automated)
 
 Note: this method allows using docker-compose and the Makefile.
 
-1. Download the repository [zip file](https://github.com/stafli-org/stafli.cron.job/archive/master.zip) and unpack it or clone the repository using:  
-`git clone https://github.com/stafli-org/stafli.cron.job.git`
+1. Download the repository [zip file](https://github.com/stafli-org/stafli.job.cron/archive/master.zip) and unpack it or clone the repository using:  
+`git clone https://github.com/stafli-org/stafli.job.cron.git`
 2. Navigate to the project directory through the terminal:  
-`cd stafli.cron.job`
+`cd stafli.job.cron`
 3. Type in the desired operation through the terminal:  
 `make <operation> DISTRO=<distro>`
 
@@ -76,8 +77,8 @@ Where <distro> is the distribution/directory and <operation> is the desired dock
 
 Example:
 ```
-git clone https://github.com/stafli-org/stafli.cron.job.git;
-cd stafli.cron.job;
+git clone https://github.com/stafli-org/stafli.job.cron.git;
+cd stafli.job.cron;
 
 # Example #1: quick start, with build
 make up DISTRO=debian8;

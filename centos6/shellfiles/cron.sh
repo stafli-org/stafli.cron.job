@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    CentOS 6 (centos6) Cron Job Scheduler (shellscript)
+#    CentOS 6 (centos6) Cron14 Job Scheduler (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.

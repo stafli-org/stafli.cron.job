@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Debian 7 (wheezy) Cron Job Scheduler (shellscript)
+#    Debian 7 (wheezy) Cron30 Job Scheduler (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
