@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    CentOS 7 (centos7) Cron14 Job Scheduler (shellscript)
+#    Debian 7 (wheezy) Cron30 Job Scheduler (shellscript)
 #    Copyright (C) 2016-2017 Stafli
 #    Luís Pedro Algarvio
 #    This file is part of the Stafli Application Stack.
@@ -33,22 +33,22 @@ shopt -s expand_aliases;
 source $(dirname "${BASH_SOURCE[0]}")/../.env;
 
 # Load dockerfile
-source "$(dirname $(readlink -f $0))/../dockerfiles/cron.dockerfile";
+source "$(dirname $(readlink -f $0))/../dockerfiles/${IMAGE_TAG_PREFIX}${DISTRO_DEBIAN7_VERSION}.dockerfile";
 
 #
 # Cleanup
 #
 
 # Remove dupplicated services
-#yum remove -y cronie cronie-anacron;
+#apt-get remove --purge -y cron anacron;
 
 #
 # Configuration
 #
 
 # Enable daemon
-systemctl enable crond.service;
+update-rc.d cron enable;
 
 # Start daemon
-systemctl restart crond.service;
+service cron restart;
 
