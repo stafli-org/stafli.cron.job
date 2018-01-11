@@ -24,14 +24,14 @@
 #
 
 # Base image to use
-FROM stafli/stafli.system.base:base10_centos7
+FROM stafli/stafli.init.supervisor:supervisor31_centos7
 
 # Labels to apply
-LABEL description="Stafli Cron Job Scheduler (stafli/stafli.job.cron, Based on Stafli Base System (stafli/stafli.system.base)" \
+LABEL description="Stafli Cron Job Scheduler (stafli/stafli.job.cron), Based on Stafli Init Supervisor (stafli/stafli.init.supervisor)" \
       maintainer="lp@algarvio.org" \
       org.label-schema.schema-version="1.0.0-rc.1" \
-      org.label-schema.name="Stafli Cron Job Scheduler (stafli/stafli.job.cron" \
-      org.label-schema.description="Based on Stafli Base System (stafli/stafli.system.base)" \
+      org.label-schema.name="Stafli Cron Job Scheduler (stafli/stafli.job.cron)" \
+      org.label-schema.description="Based on Stafli Init Supervisor (stafli/stafli.init.supervisor)" \
       org.label-schema.keywords="stafli, cron, job, debian, centos" \
       org.label-schema.url="https://stafli.org/" \
       org.label-schema.license="GPLv3" \
@@ -103,6 +103,12 @@ command=/bin/bash -c \"supervisorctl start crond;\"\n\
 autostart=true\n\
 autorestart=false\n\
 startsecs=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
 \n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
@@ -114,6 +120,12 @@ startsecs=0\n\
 command=/bin/bash -c \"\$(which crond) -n\"\n\
 autostart=false\n\
 autorestart=true\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
 \n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
