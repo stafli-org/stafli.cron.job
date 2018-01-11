@@ -19,11 +19,52 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#
+# Build
+#
+
+# Base image to use
 FROM stafli/stafli.system.base:base10_debian8
+
+# Labels to apply
+LABEL description="Stafli Cron Job Scheduler (stafli/stafli.job.cron, Based on Stafli Base System (stafli/stafli.system.base)" \
+      maintainer="lp@algarvio.org" \
+      org.label-schema.schema-version="1.0.0-rc.1" \
+      org.label-schema.name="Stafli Cron Job Scheduler (stafli/stafli.job.cron" \
+      org.label-schema.description="Based on Stafli Base System (stafli/stafli.system.base)" \
+      org.label-schema.keywords="stafli, cron, job, debian, centos" \
+      org.label-schema.url="https://stafli.org/" \
+      org.label-schema.license="GPLv3" \
+      org.label-schema.vendor-name="Stafli" \
+      org.label-schema.vendor-email="info@stafli.org" \
+      org.label-schema.vendor-website="https://www.stafli.org" \
+      org.label-schema.authors.lpalgarvio.name="Luis Pedro Algarvio" \
+      org.label-schema.authors.lpalgarvio.email="lp@algarvio.org" \
+      org.label-schema.authors.lpalgarvio.homepage="https://lp.algarvio.org" \
+      org.label-schema.authors.lpalgarvio.role="Maintainer" \
+      org.label-schema.registry-url="https://hub.docker.com/r/stafli/stafli.job.cron" \
+      org.label-schema.vcs-url="https://github.com/stafli-org/stafli.job.cron" \
+      org.label-schema.vcs-branch="master" \
+      org.label-schema.os-id="debian" \
+      org.label-schema.os-version-id="8" \
+      org.label-schema.os-architecture="amd64" \
+      org.label-schema.version="1.0"
 
 #
 # Arguments
 #
+
+#
+# Environment
+#
+
+# Working directory to use when executing build and run instructions
+# Defaults to /.
+#WORKDIR /
+
+# User and group to use when executing build and run instructions
+# Defaults to root.
+#USER root:root
 
 #
 # Packages
@@ -38,7 +79,7 @@ RUN printf "Installing repositories and packages...\n" && \
     apt-get update && apt-get install -qy \
       cron anacron && \
     printf "# Cleanup the Package Manager...\n" && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*; \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
     \
     printf "Finished installing repositories and packages...\n";
 
@@ -49,37 +90,49 @@ RUN printf "Installing repositories and packages...\n" && \
 # Update daemon configuration
 # - Supervisor
 # - Cron
-RUN printf "Updading Daemon configuration...\n"; \
+RUN printf "Updading Daemon configuration...\n" && \
     \
-    printf "Updading Supervisor configuration...\n"; \
+    printf "Updading Supervisor configuration...\n" && \
     \
     # /etc/supervisor/conf.d/init.conf \
-    file="/etc/supervisor/conf.d/init.conf"; \
-    printf "\n# Applying configuration for ${file}...\n"; \
+    file="/etc/supervisor/conf.d/init.conf" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
     printf "# init\n\
 [program:init]\n\
 command=/bin/bash -c \"supervisorctl start crond;\"\n\
 autostart=true\n\
 autorestart=false\n\
 startsecs=0\n\
-\n" > ${file}; \
-    printf "Done patching ${file}...\n"; \
+\n" > ${file} && \
+    printf "Done patching ${file}...\n" && \
     \
     # /etc/supervisor/conf.d/crond.conf \
-    file="/etc/supervisor/conf.d/crond.conf"; \
-    printf "\n# Applying configuration for ${file}...\n"; \
+    file="/etc/supervisor/conf.d/crond.conf" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
     printf "# Cron\n\
 [program:crond]\n\
 command=/bin/bash -c \"\$(which cron) -f\"\n\
 autostart=false\n\
 autorestart=true\n\
-\n" > ${file}; \
-    printf "Done patching ${file}...\n"; \
+\n" > ${file} && \
+    printf "Done patching ${file}...\n" && \
     \
-    printf "Updading Cron configuration...\n"; \
+    printf "Updading Cron configuration...\n" && \
     \
     # ignoring /etc/default/cron \
-    touch /etc/crontab; \
+    touch /etc/crontab && \
     \
     printf "Finished Daemon configuration...\n";
+
+#
+# Run
+#
+
+# Command to execute
+# Defaults to /bin/bash.
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf", "--nodaemon"]
+
+# Ports to expose
+# Defaults to none
+#EXPOSE ...
 
