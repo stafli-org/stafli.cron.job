@@ -24,7 +24,7 @@
 #
 
 # Base image to use
-FROM stafli/stafli.init.supervisor:supervisor21_centos6
+FROM stafli/stafli.init.supervisor:supervisor31_centos6
 
 # Labels to apply
 LABEL description="Stafli Cron Job Scheduler (stafli/stafli.job.cron), Based on Stafli Init Supervisor (stafli/stafli.init.supervisor)" \
@@ -95,13 +95,31 @@ RUN printf "Updading Daemon configuration...\n" && \
     \
     printf "Updading Supervisor configuration...\n" && \
     \
-    # /etc/supervisord.conf \
-    file="/etc/supervisord.conf" && \
+    # /etc/supervisord.d/init.conf \
+    file="/etc/supervisord.d/init.conf" && \
+    printf "\n# Applying configuration for ${file}...\n" && \
+    printf "# init\n\
+[program:init]\n\
+command=/bin/bash -c \"supervisorctl start crond;\"\n\
+autostart=true\n\
+autorestart=false\n\
+startsecs=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_events_enabled=true\n\
+stderr_events_enabled=true\n\
+\n" > ${file} && \
+    printf "Done patching ${file}...\n" && \
+    \
+    # /etc/supervisord.d/crond.conf \
+    file="/etc/supervisord.d/crond.conf" && \
     printf "\n# Applying configuration for ${file}...\n" && \
     printf "# Cron\n\
 [program:crond]\n\
 command=/bin/bash -c \"\$(which crond) -n\"\n\
-autostart=true\n\
+autostart=false\n\
 autorestart=true\n\
 stdout_logfile=/dev/stdout\n\
 stdout_logfile_maxbytes=0\n\
@@ -109,7 +127,7 @@ stderr_logfile=/dev/stderr\n\
 stderr_logfile_maxbytes=0\n\
 stdout_events_enabled=true\n\
 stderr_events_enabled=true\n\
-\n" >> ${file} && \
+\n" > ${file} && \
     printf "Done patching ${file}...\n" && \
     \
     printf "Updading Cron configuration...\n" && \
