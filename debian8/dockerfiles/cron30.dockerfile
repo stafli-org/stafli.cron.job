@@ -70,15 +70,15 @@ LABEL description="Stafli Cron Job Scheduler (stafli/stafli.job.cron), Based on 
 # Packages
 #
 
-# Install daemon and utilities packages
+# Install cron packages
 #  - cron: for crond, the process scheduling daemon
 #  - anacron: for anacron, the cron-like program that doesn't go by time
 RUN printf "Installing repositories and packages...\n" && \
     \
-    printf "Install the required packages...\n" && \
+    printf "Install the selected packages...\n" && \
     apt-get update && apt-get install -qy \
       cron anacron && \
-    printf "# Cleanup the Package Manager...\n" && \
+    printf "Cleanup the package manager...\n" && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     \
     printf "Finished installing repositories and packages...\n";
