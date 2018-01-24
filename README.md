@@ -23,23 +23,25 @@ The services use custom images as a starting point for the following distributio
 
 ## Services
 These are the services described by the dockerfile and docker-compose files:
-- Cron 1.4.x (centos6 and centos7), built on [Stafli Init Supervisor](https://github.com/stafli-org/stafli.init.supervisor) and additional [ISC Cron](ftp://ftp.isc.org/isc/cron/cron_4.1.shar) packages
-- Cron 3.0.x (debian7 and debian8), built on [Stafli Init Supervisor](https://github.com/stafli-org/stafli.init.supervisor) and additional [Vixie Cron / Cronie](https://github.com/cronie-crond/cronie) packages
+- Cron 3.0.x (debian8 and debian7), built on [Stafli Init Supervisor](https://github.com/stafli-org/stafli.init.supervisor) and additional [Vixie Cron / Cronie](https://github.com/cronie-crond/cronie) packages
+- Cron 1.4.x (centos7 and centos6), built on [Stafli Init Supervisor](https://github.com/stafli-org/stafli.init.supervisor) and additional [ISC Cron](ftp://ftp.isc.org/isc/cron/cron_4.1.shar) packages
 
 ## Images
 These are the [resulting images](https://hub.docker.com/r/stafli/stafli.job.cron/tags) upon building:
-- Cron 1.4.x/3.0.x:
+- Stable:
   - stafli/stafli.job.cron:cron30_debian8   [![](https://images.microbadger.com/badges/image/stafli/stafli.job.cron:cron30_debian8.svg)](https://microbadger.com/images/stafli/stafli.job.cron:cron30_debian8 "Get your own image badge on microbadger.com")
-  - stafli/stafli.job.cron:cron30_debian7   [![](https://images.microbadger.com/badges/image/stafli/stafli.job.cron:cron30_debian7.svg)](https://microbadger.com/images/stafli/stafli.job.cron:cron30_debian7 "Get your own image badge on microbadger.com")
   - stafli/stafli.job.cron:cron14_centos7   [![](https://images.microbadger.com/badges/image/stafli/stafli.job.cron:cron14_centos7.svg)](https://microbadger.com/images/stafli/stafli.job.cron:cron14_centos7 "Get your own image badge on microbadger.com")
+- Old Stable:
+  - stafli/stafli.job.cron:cron30_debian7   [![](https://images.microbadger.com/badges/image/stafli/stafli.job.cron:cron30_debian7.svg)](https://microbadger.com/images/stafli/stafli.job.cron:cron30_debian7 "Get your own image badge on microbadger.com")
   - stafli/stafli.job.cron:cron14_centos6   [![](https://images.microbadger.com/badges/image/stafli/stafli.job.cron:cron14_centos6.svg)](https://microbadger.com/images/stafli/stafli.job.cron:cron14_centos6 "Get your own image badge on microbadger.com")
 
 ## Containers
 These containers can be created from the images:
-- Cron 1.4.x/3.0.x:
+- Stable:
   - stafli_job_cron30_debian8_xxx
-  - stafli_job_cron30_debian7_xxx
   - stafli_job_cron14_centos7_xxx
+- Old Stable:
+  - stafli_job_cron30_debian7_xxx
   - stafli_job_cron14_centos6_xxx
 
 ## Usage
