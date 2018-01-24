@@ -70,16 +70,23 @@ LABEL description="Stafli Cron Job Scheduler (stafli/stafli.job.cron), Based on 
 # Packages
 #
 
-# Install cron packages
-#  - cronie: for crond, the process scheduling daemon
-#  - cronie-anacron: for anacron, the cron-like program that doesn't go by time
+# Refresh the package manager
+# Install the selected packages
+#   Install the cron packages
+#    - cronie: for crond, the process scheduling daemon
+#    - cronie-anacron: for anacron, the cron-like program that doesn't go by time
+# Cleanup the package manager
 RUN printf "Installing repositories and packages...\n" && \
     \
+    printf "Refresh the package manager...\n" && \
+    rpm --rebuilddb && yum makecache && \
+    \
     printf "Install the selected packages...\n" && \
-    yum makecache && yum install -y \
+    yum install -y \
       cronie cronie-anacron && \
+    \
     printf "Cleanup the package manager...\n" && \
-    yum clean all && rm -Rf /var/lib/yum/* && \
+    yum clean all && rm -Rf /var/lib/yum/* && rm -Rf /var/cache/yum/* && \
     \
     printf "Finished installing repositories and packages...\n";
 
